@@ -8,8 +8,6 @@ import LoggedIn from "./pages/Loggedin"
 import Signup from './pages/Signup';
 
 
-
-
 function App() {
   return (
 
