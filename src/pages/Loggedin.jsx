@@ -10,10 +10,8 @@ import TopLeft from "../components/TopLeft";
 import { io } from "socket.io-client";
 import { useTransition, animated } from "react-spring"
 
-
 const ApiUrl = process.env.REACT_APP_API_URL;
 const socket = io(ApiUrl, { transports: ["websocket"] });
-
 
 function Home({ routerProps }) {
 
@@ -90,8 +88,8 @@ function Home({ routerProps }) {
             return { ...item, title: item.members.map(item => { if (item._id !== id) return item.username }) }
             // return { ...item, onClick: setRoom }
         })
-        console.log('chatsNames:', chatsNames)
         setDataSource(chatsNames)
+        console.log('dataSource:', chatsNames)
     }
 
 

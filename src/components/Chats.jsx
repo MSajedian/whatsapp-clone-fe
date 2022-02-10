@@ -44,14 +44,34 @@ const Chats = ({ dataSource, setRoom, setRoomForUser }) => {
                     </svg>
                 </div>
             </div>
-
+            {console.log('new Date():', new Date())}
+            {/* {console.log('new Date():', dataSource.map(item => { return { date: item.chatHistory[0].timestamp, } }))} */}
             {
                 query.length === 0 &&
-
                 <ChatList
                     style={{ maxHeight: "100%", overflowY: "scroll", }}
                     className='chat-list '
-                    dataSource={dataSource}
+                    dataSource={dataSource.map(item => { return { 
+                        title: item.title[0], 
+                        alt: item.title[0], 
+                        avatar: item.members[0].avatar,
+                        // date: item.chatHistory[0].timestamp,
+                     } })}
+
+
+                    // dataSource={dataSource}
+
+                    // dataSource={[
+                    //     {
+                    //         // title: dataSource.map(item => {return { title: item.title[0] }} ),
+                    //         // alt: dataSource[0].title,
+                    //         // avatar: dataSource[0].members[0].avatar,
+                    //         // subtitle: 'What are you doing?',
+                    //         // date: new Date(),
+                    //         // unread: 0,
+                    //     }
+                    // ]}
+
                     onClick={(e) => setRoom(e)}
                 />
             }
