@@ -65,7 +65,9 @@ function Home({ routerProps }) {
     const setRoom = async (room) => {
         setSelectedRoom(room)
         setchatHis([])
+        console.log('--------- room -----------')
         console.log('room:', room)
+        console.log('--------------------------')
         const response = await fetch(`${ApiUrl}/room/history/${room._id}`);
         const { chatHistory } = await response.json();
         setchatHis(chatHistory);
