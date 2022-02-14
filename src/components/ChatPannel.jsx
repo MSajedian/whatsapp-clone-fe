@@ -15,7 +15,6 @@ const ChatPannel = ({ chats, chatHis, selectedRoom }) => {
     const [currentMessage, setCurrentMessage] = useState("");
     const [chatHistory, setChatHistory] = useState([]);
 
-
     const sendMessage = () => {
 
         const messageToSend = {
@@ -49,20 +48,31 @@ const ChatPannel = ({ chats, chatHis, selectedRoom }) => {
                 }
             }
         }
+
+
+
         setChatHistory(chatHis)
     }, [chatHis, chatHistory]);
 
 
     return (
         <>
-
-
             <MessageList
                 className='message-list messages d-flex flex-column-reverse'
                 lockable={true}
                 toBottomHeight={'100%'}
-                dataSource={chatHistory ? chatHistory : []} />
+                // dataSource={chatHistory ? chatHistory : []} 
 
+                dataSource={chatHis ? chatHis.map(item => {
+                    return {
+                        position: item.sender === username ? 'right' : 'left',
+                        text: item.text,
+                        type: item.type,
+                        date: new Date(item.timestamp),
+                        _id: item._id,
+                    }
+                }): []}
+            />
             {/* <SystemMessage text={"The start of your legendary conversation with Max"}>
 
                 </SystemMessage> */}

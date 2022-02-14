@@ -114,9 +114,6 @@ function Home({ routerProps }) {
         // eslint-disable-next-line
     }, []);
 
-
-
-
     const fetchUserData = async () => {
         try {
             const res = await fetch(`${ApiUrl}/users/me`, {
