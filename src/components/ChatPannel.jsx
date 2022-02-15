@@ -11,9 +11,9 @@ const socket = io(ApiUrl, { transports: ["websocket"] });
 
 const username = localStorage.getItem("username")
 
-const ChatPannel = ({ chats, chatHis, selectedRoom }) => {
+const ChatPannel = ({ chats, chatHistoryFromServer, selectedRoom }) => {
     const [currentMessage, setCurrentMessage] = useState("");
-    const [chatHistory, setChatHistory] = useState([]);
+    // const [chatHistory, setChatHistory] = useState([]);
 
     const sendMessage = () => {
 
@@ -29,30 +29,29 @@ const ChatPannel = ({ chats, chatHis, selectedRoom }) => {
 
         socket.emit("sendMessage", { message: messageToSend, roomId: selectedRoom._id });
 
-        messageToSend.position = 'right'
-        setChatHistory([...chatHistory, messageToSend]);
+        // messageToSend.position = 'right'
+        // setChatHistory([...chatHistory, messageToSend]);
+        // setChatHistory([...chatHistory, messageToSend]);
         setCurrentMessage("");
     };
 
     useEffect(() => {
 
-        setChatHistory([])
-        console.log('username:', username)
-        console.log('chatHis:', chatHis)
-        if (chatHis) {
-            for (let index = 0; index < chatHis.length; index++) {
-                if (chatHis[index].sender === username) {
-                    chatHis[index].position = 'right';
-                } else {
-                    chatHis[index].position = 'left';
-                }
-            }
-        }
+        // setChatHistory([])
+        // console.log('username:', username)
+        // setChatHistory(chatHistoryFromServer ? chatHistoryFromServer.map(item => {
+        //     return {
+        //         position: item.sender === username ? 'right' : 'left',
+        //         text: item.text,
+        //         type: item.type,
+        //         date: new Date(item.timestamp),
+        //         _id: item._id,
+        //     }
+        // }): [])
 
-
-
-        setChatHistory(chatHis)
-    }, [chatHis, chatHistory]);
+        // setChatHistory(chatHistoryFromServer)
+    }, [chatHistoryFromServer]);
+    // }, [chatHistoryFromServer, chatHistory]);
 
 
     return (
@@ -63,7 +62,7 @@ const ChatPannel = ({ chats, chatHis, selectedRoom }) => {
                 toBottomHeight={'100%'}
                 // dataSource={chatHistory ? chatHistory : []} 
 
-                dataSource={chatHis ? chatHis.map(item => {
+                dataSource={chatHistoryFromServer ? chatHistoryFromServer.map(item => {
                     return {
                         position: item.sender === username ? 'right' : 'left',
                         text: item.text,

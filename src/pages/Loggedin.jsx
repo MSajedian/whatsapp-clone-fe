@@ -21,7 +21,7 @@ function Home({ routerProps }) {
     const [selectedRoom, setSelectedRoom] = useState(null)
     const [chats, setChats] = useState(null)
 
-    const [chatHis, setchatHis] = useState(null)
+    const [chatHistoryFromServer, setChatHistoryFromServer] = useState(null)
 
     // const token = localStorage.getItem("accessToken")
     // const username = localStorage.getItem("username")
@@ -56,21 +56,21 @@ function Home({ routerProps }) {
 
                 setSelectedRoom(null)
                 setSelectedRoom({ ...room, title: roomName[0].username })
-                setchatHis([])
-                setchatHis(room.chatHistory);
+                setChatHistoryFromServer([])
+                setChatHistoryFromServer(room.chatHistory);
             }
         }
     }
 
     const setRoom = async (room) => {
         setSelectedRoom(room)
-        setchatHis([])
+        setChatHistoryFromServer([])
         console.log('--------- room -----------')
         console.log('room:', room)
         console.log('--------------------------')
         const response = await fetch(`${ApiUrl}/room/history/${room._id}`);
         const { chatHistory } = await response.json();
-        setchatHis(chatHistory);
+        setChatHistoryFromServer(chatHistory);
     }
 
     const getRooms = async () => {
@@ -103,8 +103,8 @@ function Home({ routerProps }) {
         socket.emit("did-connect", id)
 
         socket.on("message", (message) => {
-            setchatHis((chatHis) => [...chatHis, message]);
-            console.log('chatHis:', chatHis)
+            setChatHistoryFromServer((chatHis) => [...chatHis, message]);
+            console.log('chatHis:', chatHistoryFromServer)
         });
 
         return () => {
@@ -163,7 +163,7 @@ function Home({ routerProps }) {
 
                         <TopRight selectedRoom={selectedRoom} />
 
-                        <ChatPannel chats={chats} chatHis={chatHis} selectedRoom={selectedRoom} />
+                        <ChatPannel chats={chats} chatHistoryFromServer={chatHistoryFromServer} selectedRoom={selectedRoom} />
 
                     </Col>
                 </Row>
