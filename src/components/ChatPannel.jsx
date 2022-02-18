@@ -86,8 +86,6 @@ const ChatPannel = ({ chats, chatHistoryFromServer, selectedRoom }) => {
                     cleanOnEnter={true}
                     onEnter={sendMessage}
                 />
-
-
             </div>
 
         </>
