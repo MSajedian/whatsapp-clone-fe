@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from "react";
-// import { Col } from "react-bootstrap"
 import { MessageList } from "react-chat-elements"
-// import { MessageList, Input, SystemMessage, Button } from "react-chat-elements"
 import { io } from "socket.io-client";
 import InputEmoji from "react-input-emoji";
 
@@ -11,47 +9,22 @@ const socket = io(ApiUrl, { transports: ["websocket"] });
 
 const username = localStorage.getItem("username")
 
-const ChatPannel = ({ chats, chatHistoryFromServer, selectedRoom }) => {
+const ChatPannel = ({ chatHistoryFromServer, selectedRoom }) => {
     const [currentMessage, setCurrentMessage] = useState("");
-    // const [chatHistory, setChatHistory] = useState([]);
 
     const sendMessage = () => {
-
         const messageToSend = {
             sender: username,
             text: currentMessage,
             type: "text",
             timestamp: Date.now(),
-            // position: 'right',
-            // id: "60f8310325ad75631051647f",
         };
-        console.log('selectedRoom:', selectedRoom)
-
         socket.emit("sendMessage", { message: messageToSend, roomId: selectedRoom._id });
-
-        // messageToSend.position = 'right'
-        // setChatHistory([...chatHistory, messageToSend]);
-        // setChatHistory([...chatHistory, messageToSend]);
         setCurrentMessage("");
     };
 
     useEffect(() => {
-
-        // setChatHistory([])
-        // console.log('username:', username)
-        // setChatHistory(chatHistoryFromServer ? chatHistoryFromServer.map(item => {
-        //     return {
-        //         position: item.sender === username ? 'right' : 'left',
-        //         text: item.text,
-        //         type: item.type,
-        //         date: new Date(item.timestamp),
-        //         _id: item._id,
-        //     }
-        // }): [])
-
-        // setChatHistory(chatHistoryFromServer)
     }, [chatHistoryFromServer]);
-    // }, [chatHistoryFromServer, chatHistory]);
 
 
     return (
@@ -60,8 +33,6 @@ const ChatPannel = ({ chats, chatHistoryFromServer, selectedRoom }) => {
                 className='message-list messages d-flex flex-column-reverse'
                 lockable={true}
                 toBottomHeight={'100%'}
-                // dataSource={chatHistory ? chatHistory : []} 
-
                 dataSource={chatHistoryFromServer ? chatHistoryFromServer.map(item => {
                     return {
                         position: item.sender === username ? 'right' : 'left',
@@ -70,14 +41,8 @@ const ChatPannel = ({ chats, chatHistoryFromServer, selectedRoom }) => {
                         date: new Date(item.timestamp),
                         _id: item._id,
                     }
-                }): []}
+                }) : []}
             />
-            {/* <SystemMessage text={"The start of your legendary conversation with Max"}>
-
-                </SystemMessage> */}
-
-
-
             <div className="input-parent d-flex p-3">
                 <InputEmoji
                     className="message-input"

@@ -4,7 +4,7 @@ import { ChatList } from "react-chat-elements"
 
 const ApiUrl = process.env.REACT_APP_API_URL
 
-const Chats = ({ dataSource, setRoom, setRoomForUser }) => {
+const Chats = ({ setRoom, setRoomForUser, dataSource }) => {
     const [query, setQuery] = useState("")
     const [contacts, setcontacts] = useState(null);
 
