@@ -17,7 +17,7 @@ const Login = ({ routerProps }) => {
       event.preventDefault();
       event.stopPropagation();
     }
-   
+
     try {
       const details = {
         email: username,

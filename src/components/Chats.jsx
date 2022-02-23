@@ -19,6 +19,7 @@ const Chats = ({ setRoom, setRoomForUser, dataSource }) => {
                 })
                 if (res.ok) {
                     const json = await res.json()
+                    console.log('json:', json)
                     const users = json.map(item => { return { avatar: item.avatar, title: item.username, date: false, id: item._id } })
                     setcontacts(users)
                 }
@@ -29,6 +30,7 @@ const Chats = ({ setRoom, setRoomForUser, dataSource }) => {
     }
 
     useEffect(() => {
+        console.log('dataSource in Chats component:', dataSource)
         fetchQuery()
         // eslint-disable-next-line
     }, [query])
@@ -49,19 +51,20 @@ const Chats = ({ setRoom, setRoomForUser, dataSource }) => {
                 <ChatList
                     style={{ maxHeight: "100%", overflowY: "scroll", }}
                     className='chat-list '
-                    // dataSource={dataSource}
+                    // dataSource={dataSource ? dataSource : {}}
 
-                    dataSource={dataSource.map(item => {
+                    dataSource={dataSource ? dataSource.map(item => {
                         return {
-                            avatar: item.members[0].avatar,
-                            alt: item.title[0],
-                            title: item.title[0],
-                            subtitle: item.chatHistory[item.chatHistory.length - 1].text,
-                            date: new Date(item.chatHistory[item.chatHistory.length - 1].timestamp),
+                            avatar: item.avatar,
+                            alt: item.title,
+                            title: item.title,
+                            subtitle: (item.chatHistory.length > 0 ? item.chatHistory[item.chatHistory.length - 1].text : ""),
+                            date: (item.chatHistory.length > 0 ? new Date(item.chatHistory[item.chatHistory.length - 1].timestamp) : ""),
                             // unread: 0,
                             _id: item._id,
                         }
-                    })}
+                    }) : {}}
+
                     onClick={(e) => setRoom(e)}
                 />
             }

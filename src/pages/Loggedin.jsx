@@ -86,14 +86,12 @@ function Home({ routerProps }) {
         setChats(responseOfChats)
 
         const chatsNames = responseOfChats.map((item) => {
-            // eslint-disable-next-line
-            return { ...item, title: item.members.map(item => { if (item._id !== id) return item.username }) }
-            // return { ...item, onClick: setRoom }
+            return { ...item, title: item.members.filter(member => member._id !== id)[0].username, avatar: item.members.filter(member => member._id !== id)[0].avatar }
         })
+
         setDataSource(chatsNames)
         console.log('dataSource:', chatsNames)
     }
-
 
     useEffect(() => {
         fetchUserData()

@@ -33,7 +33,7 @@ const ChatPannel = ({ chatHistoryFromServer, selectedRoom }) => {
                 className='message-list messages d-flex flex-column-reverse'
                 lockable={true}
                 toBottomHeight={'100%'}
-                dataSource={chatHistoryFromServer ? chatHistoryFromServer.map(item => {
+                dataSource={(chatHistoryFromServer && chatHistoryFromServer.length > 0) ? chatHistoryFromServer.map(item => {
                     return {
                         position: item.sender === username ? 'right' : 'left',
                         text: item.text,
