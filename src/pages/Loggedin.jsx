@@ -58,6 +58,8 @@ function Home({ routerProps }) {
                 setSelectedRoom({ ...room, title: roomName[0].username })
                 setChatHistoryFromServer([])
                 setChatHistoryFromServer(room.chatHistory);
+                fetchUserData()
+                getRooms()
             }
         }
     }
@@ -133,6 +135,7 @@ function Home({ routerProps }) {
     }
     useEffect(() => {
         fetchUserData();
+        getRooms();
         // eslint-disable-next-line
     }, [showProfile])
 
