@@ -46,9 +46,7 @@ function Home({ routerProps }) {
         if (response.ok) {
             const room = await response.json();
             console.log('room:', room)
-
             socket.emit("join-room", room._id);
-
             if (room._id) {
                 // const test = room.members.filter(item => { if (item._id !== id) return item.username })
                 const roomName = room.members.filter(item => (item._id !== id))
@@ -58,8 +56,9 @@ function Home({ routerProps }) {
                 setSelectedRoom({ ...room, title: roomName[0].username })
                 setChatHistoryFromServer([])
                 setChatHistoryFromServer(room.chatHistory);
-                fetchUserData()
-                getRooms()
+                window.location.reload();
+                // getRooms()
+                // fetchUserData()
             }
         }
     }
@@ -90,29 +89,9 @@ function Home({ routerProps }) {
         const chatsNames = responseOfChats.map((item) => {
             return { ...item, title: item.members.filter(member => member._id !== id)[0].username, avatar: item.members.filter(member => member._id !== id)[0].avatar }
         })
-
         setDataSource(chatsNames)
         console.log('dataSource:', chatsNames)
     }
-
-    useEffect(() => {
-        fetchUserData()
-        getRooms();
-        socket.on("connect", () => { });
-
-        socket.emit("did-connect", id)
-
-        socket.on("message", (message) => {
-            setChatHistoryFromServer((chatHis) => [...chatHis, message]);
-            console.log('chatHis:', chatHistoryFromServer)
-        });
-
-        return () => {
-            console.log("Disconnected");
-            socket.disconnect(id);
-        };
-        // eslint-disable-next-line
-    }, []);
 
     const fetchUserData = async () => {
         try {
@@ -133,6 +112,24 @@ function Home({ routerProps }) {
             console.log(error)
         }
     }
+
+    useEffect(() => {
+        fetchUserData()
+        getRooms();
+        socket.on("connect", () => { });
+        socket.emit("did-connect", id)
+        socket.on("message", (message) => {
+            setChatHistoryFromServer((chatHis) => [...chatHis, message]);
+            console.log('chatHis:', chatHistoryFromServer)
+        });
+
+        return () => {
+            console.log("Disconnected");
+            socket.disconnect(id);
+        };
+        // eslint-disable-next-line
+    }, []);
+
     useEffect(() => {
         fetchUserData();
         getRooms();
