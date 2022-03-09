@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 // import { Col } from "react-bootstrap"
 import { ChatList } from "react-chat-elements"
 
-const ApiUrl = process.env.REACT_APP_API_URL
+const ApiUrl = process.env.REACT_APP_API_LOCAL_URL || process.env.REACT_APP_API_REMOTE_URL
 
 const Chats = ({ setRoom, setRoomForUser, dataSource }) => {
     const [query, setQuery] = useState("")

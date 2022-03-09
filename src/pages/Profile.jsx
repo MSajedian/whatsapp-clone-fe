@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { FaCheck } from "react-icons/fa"
 import { GiCancel } from "react-icons/gi"
 
-const ApiUrl = process.env.REACT_APP_API_URL
+const ApiUrl = process.env.REACT_APP_API_LOCAL_URL || process.env.REACT_APP_API_REMOTE_URL
 
 const Profile = ({ setShowProfile, show }) => {
 

@@ -4,7 +4,7 @@ import { io } from "socket.io-client";
 import InputEmoji from "react-input-emoji";
 
 
-const ApiUrl = process.env.REACT_APP_API_URL
+const ApiUrl = process.env.REACT_APP_API_LOCAL_URL || process.env.REACT_APP_API_REMOTE_URL
 const socket = io(ApiUrl, { transports: ["websocket"] });
 
 const username = localStorage.getItem("username")

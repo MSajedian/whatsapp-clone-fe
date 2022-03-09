@@ -10,7 +10,7 @@ import TopLeft from "../components/TopLeft";
 import { io } from "socket.io-client";
 import { useTransition, animated } from "react-spring"
 
-const ApiUrl = process.env.REACT_APP_API_URL;
+const ApiUrl = process.env.REACT_APP_API_LOCAL_URL || process.env.REACT_APP_API_REMOTE_URL;
 const socket = io(ApiUrl, { transports: ["websocket"] });
 
 function Home({ routerProps }) {
