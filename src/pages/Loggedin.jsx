@@ -28,6 +28,23 @@ function Home({ routerProps }) {
 
     const id = localStorage.getItem("id")
 
+    useEffect(() => {
+        fetchUserData()
+        getRooms();
+        socket.on("connect", () => { });
+        socket.emit("did-connect", id)
+        socket.on("message", (message) => {
+            setChatHistoryFromServer((chatHis) => [...chatHis, message]);
+            console.log('chatHis:', chatHistoryFromServer)
+        });
+
+        return () => {
+            console.log("Disconnected");
+            socket.disconnect(id);
+        };
+        // eslint-disable-next-line
+    }, []);
+
     const transition = useTransition(showProfile, {
         from: { x: -100, y: 0, opacity: 0, },
         enter: { x: 0, y: 0, opacity: 1 },
@@ -113,22 +130,7 @@ function Home({ routerProps }) {
         }
     }
 
-    useEffect(() => {
-        fetchUserData()
-        getRooms();
-        socket.on("connect", () => { });
-        socket.emit("did-connect", id)
-        socket.on("message", (message) => {
-            setChatHistoryFromServer((chatHis) => [...chatHis, message]);
-            console.log('chatHis:', chatHistoryFromServer)
-        });
-
-        return () => {
-            console.log("Disconnected");
-            socket.disconnect(id);
-        };
-        // eslint-disable-next-line
-    }, []);
+ 
 
     useEffect(() => {
         fetchUserData();
